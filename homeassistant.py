@@ -10,7 +10,8 @@ parser.add_argument('-s', '--service', help='The service to execute (e.g. turn_o
 parser.add_argument('-e', '--entity', help='The entity id without domain (e.g. amplifier)', required=True)
 args = parser.parse_args()
 
-load_dotenv()
+# load_dotenv doesn't handle symbol links correctly
+load_dotenv(f"{os.path.dirname(os.path.realpath(__file__))}/.env")
 
 url = f"http://homeassistant:8123/api/services/{args.domain}/{args.service}"
 headers = {"Authorization": f"Bearer {os.environ['BEARER_TOKEN']}"}
